@@ -1007,6 +1007,9 @@
             [categoryFilterListener, eventUpdateListener].forEach(function(f) {f();});
         });
 
+        $scope.categoryHasDescriptions = function(category) {
+            return Object.keys(category.description).length > 0;
+        };
 
     });
 

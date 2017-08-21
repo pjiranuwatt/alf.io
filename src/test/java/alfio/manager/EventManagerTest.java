@@ -84,6 +84,7 @@ public class EventManagerTest {{
 
         it.should("insert a new Ticket if the difference is 1", expect -> {
             when(ticketRepository.selectNotAllocatedTicketsForUpdate(eq(eventId), eq(1), eq(singletonList(Ticket.TicketStatus.FREE.name())))).thenReturn(singletonList(1));
+            when(ticketRepository.selectNotAllocatedTicketsForUpdate(eq(eventId), eq(1), anyListOf(String.class))).thenReturn(singletonList(123));
             eventManager.handleTicketNumberModification(event, original, updated, 1);
             verify(ticketRepository, never()).invalidateTickets(anyListOf(Integer.class));
             ArgumentCaptor<SqlParameterSource[]> captor = ArgumentCaptor.forClass(SqlParameterSource[].class);

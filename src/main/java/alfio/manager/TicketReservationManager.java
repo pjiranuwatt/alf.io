@@ -579,9 +579,9 @@ public class TicketReservationManager {
             AdditionalServiceItemStatus asStatus = paymentProxy.isDeskPaymentRequired() ? AdditionalServiceItemStatus.TO_BE_PAID : AdditionalServiceItemStatus.ACQUIRED;
             acquireItems(ticketStatus, asStatus, paymentProxy, reservationId, email, customerName, userLanguage.getLanguage(), billingAddress);
             pluginManager.handleReservationConfirmation(ticketReservationRepository.findReservationById(reservationId), eventId);
+            //cleanup unused special price codes...
+            specialPriceSessionId.ifPresent(specialPriceRepository::unbindFromSession);
         }
-        //cleanup unused special price codes...
-        specialPriceSessionId.ifPresent(specialPriceRepository::unbindFromSession);
 
         auditingRepository.insert(reservationId, null, Audit.EventType.RESERVATION_COMPLETE, new Date(), Audit.EntityType.RESERVATION, reservationId);
     }

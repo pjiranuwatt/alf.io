@@ -84,7 +84,7 @@ public final class TemplateProcessor {
                                                       TemplateManager templateManager,
                                                       FileUploadManager fileUploadManager,
                                                       String reservationID) {
-        
+
         return () -> {
             Optional<TemplateResource.ImageData> imageData = extractImageModel(event, fileUploadManager);
             Map<String, Object> model = TemplateResource.buildModelForTicketPDF(organization, event, ticketReservation, ticketCategory, ticket, imageData, reservationID);
@@ -100,7 +100,7 @@ public final class TemplateProcessor {
 
         builder.withW3cDocument(DOMBuilder.jsoup2DOM(Jsoup.parse(page)), "");
         PdfBoxRenderer renderer = builder.buildPdfRenderer();
-        try (InputStream is = new ClassPathResource("/alfio/font/DejaVuSansMono.ttf").getInputStream()) {
+        try (InputStream is = new ClassPathResource("/alfio/font/THSarabunNew.ttf").getInputStream()) {
             renderer.getFontResolver().addFont(() -> is, "DejaVu Sans Mono", null, null, false);
         } catch(IOException e) {
             log.warn("error while loading DejaVuSansMono.ttf font", e);
